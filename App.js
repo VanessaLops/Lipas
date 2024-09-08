@@ -1,47 +1,22 @@
-import React from 'react';
-
-import 'react-native-gesture-handler';
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import MariaFelipaScreen from './screens/mariaFelipa';
-import LoginScreen from './screens/login';
-import CadastroScreen from './screens/cadastro';
-import EsqueceuSenhaScreen from './screens/esqueceuSenha';
-import HomeScreen from './screens/home';
-import BotaoPanicoScreen from './screens/botaoPanico';
-import ManualDefesaScreen from './screens/manualDesfesa';
-import PerfilScreen from './screens/perfil';
-import HistoricoScreen from './screens/historico';
-import FeedbackScreen from './screens/feedback';
-import SobreScreen from './screens/sobre';
-import ConfiguracaoScreen from './screens/configuracao';
-
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import DrawerNavigator from "./src/routes/drawer";
+import StackNavigator from "./src/routes/stack";
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const Stack = createNativeStackNavigator();
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name='MariaFelipa' component = {MariaFelipaScreen} />
-          <Stack.Screen name='Login' component = {LoginScreen} />
-          <Stack.Screen name='Cadastro' component = {CadastroScreen} />
-          <Stack.Screen name='EsqueceuSenha' component = {EsqueceuSenhaScreen} />
-          <Stack.Screen name='Home' component = {HomeScreen} />
-          <Stack.Screen name='BotaoPanico' component = {BotaoPanicoScreen} />
-          <Stack.Screen name='ManualDeDefesa' component = {ManualDefesaScreen} />
-          <Stack.Screen name='Perfil' component = {PerfilScreen} />
-          <Stack.Screen name='Historico' component = {HistoricoScreen} />
-          <Stack.Screen name='Feedback' component = {FeedbackScreen} />
-          <Stack.Screen name='Sobre' component = {SobreScreen} />
-          <Stack.Screen name='Configuracao' component = {ConfiguracaoScreen} />
-      </Stack.Navigator>
-   </NavigationContainer>
+      {isLoggedIn ? (
+        <DrawerNavigator />
+      ) : (
+        <StackNavigator onLoginSuccess={handleLoginSuccess} />
+      )}
+    </NavigationContainer>
   );
 }
-
-
-
