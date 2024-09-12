@@ -1,4 +1,6 @@
+import { DrawerActions } from '@react-navigation/native';
 import React from 'react';
+import { Button } from 'react-native';
 import { View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
@@ -8,6 +10,17 @@ const HomeScreen = ({ navigation }) => {
         <Image source={require('../assets/borboleta.png')} style={styles.borboleta} />
       </View>
       <View style={styles.container2}>
+      <Button
+        title="Open Drawer"
+        onPress={() => {
+          // Verifica se o objeto de navegação tem a função openDrawer
+          if (navigation && navigation.openDrawer) {
+            navigation.openDrawer(); // Chame openDrawer se estiver disponível
+          } else {
+            console.warn("navigation.openDrawer is not available");
+          }
+        }}
+      />
         <Image source={require('../assets/menu.png')} style={styles.menu} />
         <View style={styles.menu2} />
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('local')}>
@@ -45,8 +58,8 @@ const styles = StyleSheet.create({
     borderColor: '#640F1480',
     borderRadius: 50,
     marginHorizontal: 20,
-    marginTop:5,
-    marginBottom:5,
+    marginTop: 5,
+    marginBottom: 5,
     paddingBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
